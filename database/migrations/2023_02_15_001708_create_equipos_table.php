@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('division');
             $table->bigInteger('campeonatos');
             $table->foreignId('estado')->references('id')->on('estados')->onUpdate('cascade')->onDelete('cascade')->nullable();
-            $table->foreignId('propietarios')->references('id')->on('propietarios')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->foreignId('propietario')->references('id')->on('propietarios')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }
