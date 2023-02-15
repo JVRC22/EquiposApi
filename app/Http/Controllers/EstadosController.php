@@ -13,7 +13,7 @@ class EstadosController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20, unique:estados.nombre',
+                'nombre' => 'required|string|min:3|max:20|unique:estados,nombre',
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -30,20 +30,23 @@ class EstadosController extends Controller
             ], 400);
         }
 
-        $estado = Estado::create([
-            "nombre" => $request->nombre
-        ]);
-
-        if ($estado->save()) {
-            return response()->json([
-                'estado' => $estado
-            ], 201);
-        } 
-        
-        else {
-            return response()->json([
-                'message' => 'No se pudo agregar el estado'
-            ], 500);
+        else
+        {
+            $estado = Estado::create([
+                "nombre" => $request->nombre
+            ]);
+    
+            if ($estado->save()) {
+                return response()->json([
+                    'estado' => $estado
+                ], 201);
+            } 
+            
+            else {
+                return response()->json([
+                    'message' => 'No se pudo agregar el estado'
+                ], 500);
+            }
         }
     }
 
@@ -52,7 +55,7 @@ class EstadosController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20, unique:estados.nombre',
+                'nombre' => 'required|string|min:3|max:20|unique:estados,nombre',
             ],
             [
                 'nombre.required' => 'El nombre es requerido',

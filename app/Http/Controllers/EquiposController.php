@@ -13,11 +13,11 @@ class EquiposController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20, unique:equipos.nombre',
-                'division' => 'required, integer, min:1, max:3',
-                'campeonatos' => 'required, integer, min:0, max:100',
-                'estado' => 'required, integer, min:1, max:32',
-                'propietario' => 'required, integer, min:1, max:100'
+                'nombre' => 'required|string|min:3|max:20|unique:equipos,nombre',
+                'division' => 'required|integer|min:1|max:3',
+                'campeonatos' => 'required|integer|min:0|max:100',
+                'estado' => 'required|integer|min:1|max:32,exists:estados,id',
+                'propietario' => 'required|integer|min:1|max:100|exists:propietarios,id'
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -40,11 +40,13 @@ class EquiposController extends Controller
                 'estado.integer' => 'El estado debe ser un número entero',
                 'estado.min' => 'El estado debe ser un número entero mayor o igual a 1',
                 'estado.max' => 'El estado debe ser un número entero menor o igual a 32',
+                'estado.exists' => 'El estado no existe',
 
                 'propietario.required' => 'El propietario es requerido',
                 'propietario.integer' => 'El propietario debe ser un número entero',
                 'propietario.min' => 'El propietario debe ser un número entero mayor o igual a 1',
-                'propietario.max' => 'El propietario debe ser un número entero menor o igual a 100'
+                'propietario.max' => 'El propietario debe ser un número entero menor o igual a 100',
+                'propietario.exists' => 'El propietario no existe'
             ]
         );
 
@@ -55,26 +57,29 @@ class EquiposController extends Controller
             ], 400);
         }
 
-        $equipo = Equipo::create([
-            "nombre" => $request->nombre,
-            "division" => $request->division,
-            "campeonatos" => $request->campeonatos,
-            "estado" => $request->estado,
-            "propietario" => $request->propietario
-        ]);
-
-        if ($equipo->save()) 
+        else
         {
-            return response()->json([
-                'equipo' => $equipo
-            ], 201);
-        } 
-        
-        else 
-        {
-            return response()->json([
-                'message' => 'No se pudo agregar el equipo'
-            ], 500);
+            $equipo = Equipo::create([
+                "nombre" => $request->nombre,
+                "division" => $request->division,
+                "campeonatos" => $request->campeonatos,
+                "estado" => $request->estado,
+                "propietario" => $request->propietario
+            ]);
+    
+            if ($equipo->save()) 
+            {
+                return response()->json([
+                    'equipo' => $equipo
+                ], 201);
+            } 
+            
+            else 
+            {
+                return response()->json([
+                    'message' => 'No se pudo agregar el equipo'
+                ], 500);
+            }
         }
     }
 
@@ -83,11 +88,11 @@ class EquiposController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20, unique:equipos.nombre',
-                'division' => 'required, integer, min:1, max:3',
-                'campeonatos' => 'required, integer, min:0, max:100',
-                'estado' => 'required, integer, min:1, max:32',
-                'propietario' => 'required, integer, min:1, max:100'
+                'nombre' => 'required|string|min:3|max:20|unique:equipos,nombre',
+                'division' => 'required|integer|min:1|max:3',
+                'campeonatos' => 'required|integer|min:0|max:100',
+                'estado' => 'required|integer|min:1|max:32|exists:estados,id',
+                'propietario' => 'required|integer|min:1|max:100|exists:propietarios,id'
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -110,11 +115,13 @@ class EquiposController extends Controller
                 'estado.integer' => 'El estado debe ser un número entero',
                 'estado.min' => 'El estado debe ser un número entero mayor o igual a 1',
                 'estado.max' => 'El estado debe ser un número entero menor o igual a 32',
+                'estado.exists' => 'El estado no existe',
 
                 'propietario.required' => 'El propietario es requerido',
                 'propietario.integer' => 'El propietario debe ser un número entero',
                 'propietario.min' => 'El propietario debe ser un número entero mayor o igual a 1',
-                'propietario.max' => 'El propietario debe ser un número entero menor o igual a 100'
+                'propietario.max' => 'El propietario debe ser un número entero menor o igual a 100',
+                'propietario.exists' => 'El propietario no existe'
             ]
         );
 

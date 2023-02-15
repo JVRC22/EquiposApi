@@ -13,12 +13,12 @@ class JugadoresController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20',
-                'ap_paterno' => 'required, string, min:3, max:20',
-                'ap_materno' => 'required, string, min:3, max:20',
-                'sexo' => 'required, char, in: M, F',
-                'f_nac' => 'required, date',
-                'equipo' => 'required, integer, min:1, max:100',
+                'nombre' => 'required|string|min:3|max:20',
+                'ap_paterno' => 'required|string|min:3|max:20',
+                'ap_materno' => 'required|string|min:3|max:20',
+                'sexo' => 'required|string|in:M,F',
+                'f_nac' => 'required|date',
+                'equipo' => 'required|integer|min:1|max:100|exists:equipos,id',
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -37,7 +37,7 @@ class JugadoresController extends Controller
                 'ap_materno.max' => 'El apellido materno debe tener como máximo 20 caracteres',
 
                 'sexo.required' => 'El sexo es requerido',
-                'sexo.char' => 'El sexo debe ser una cadena de caracteres',
+                'sexo.string' => 'El sexo debe ser una cadena de caracteres',
                 'sexo.in' => 'El sexo debe ser M o F',
 
                 'f_nac.required' => 'La fecha de nacimiento es requerida',
@@ -47,6 +47,7 @@ class JugadoresController extends Controller
                 'equipo.integer' => 'El equipo debe ser un número entero',
                 'equipo.min' => 'El equipo debe ser un número entero mayor a 0',
                 'equipo.max' => 'El equipo debe ser un número entero menor a 100',
+                'equipo.exists' => 'El equipo no existe',
             ]
         );
 
@@ -57,27 +58,30 @@ class JugadoresController extends Controller
             ], 400);
         }
 
-        $jugador = Jugador::create([
-            "nombre" => $request->nombre,
-            "ap_paterno" => $request->ap_paterno,
-            "ap_materno" => $request->ap_materno,
-            "sexo" => $request->sexo,
-            "f_nac" => $request->f_nac,
-            "equipo" => $request->equipo
-        ]);
-
-        if ($jugador->save()) 
+        else
         {
-            return response()->json([
-                'jugador' => $jugador
-            ], 201);
-        } 
-        
-        else 
-        {
-            return response()->json([
-                'message' => 'No se pudo agregar el jugador'
-            ], 500);
+            $jugador = Jugador::create([
+                "nombre" => $request->nombre,
+                "ap_paterno" => $request->ap_paterno,
+                "ap_materno" => $request->ap_materno,
+                "sexo" => $request->sexo,
+                "f_nac" => $request->f_nac,
+                "equipo" => $request->equipo
+            ]);
+    
+            if ($jugador->save()) 
+            {
+                return response()->json([
+                    'jugador' => $jugador
+                ], 201);
+            } 
+            
+            else 
+            {
+                return response()->json([
+                    'message' => 'No se pudo agregar el jugador'
+                ], 500);
+            }
         }
     }
 
@@ -86,12 +90,12 @@ class JugadoresController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20',
-                'ap_paterno' => 'required, string, min:3, max:20',
-                'ap_materno' => 'required, string, min:3, max:20',
-                'sexo' => 'required, char, in: M, F',
-                'f_nac' => 'required, date',
-                'equipo' => 'required, integer, min:1, max:100',
+                'nombre' => 'required|string|min:3|max:20',
+                'ap_paterno' => 'required|string|min:3|max:20',
+                'ap_materno' => 'required|string|min:3|max:20',
+                'sexo' => 'required|string|in:M,F',
+                'f_nac' => 'required|date',
+                'equipo' => 'required|integer|min:1|max:100|exists:equipos,id',
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -110,7 +114,7 @@ class JugadoresController extends Controller
                 'ap_materno.max' => 'El apellido materno debe tener como máximo 20 caracteres',
 
                 'sexo.required' => 'El sexo es requerido',
-                'sexo.char' => 'El sexo debe ser una cadena de caracteres',
+                'sexo.string' => 'El sexo debe ser una cadena de caracteres',
                 'sexo.in' => 'El sexo debe ser M o F',
 
                 'f_nac.required' => 'La fecha de nacimiento es requerida',
@@ -120,6 +124,7 @@ class JugadoresController extends Controller
                 'equipo.integer' => 'El equipo debe ser un número entero',
                 'equipo.min' => 'El equipo debe ser un número entero mayor a 0',
                 'equipo.max' => 'El equipo debe ser un número entero menor a 100',
+                'equipo.exists' => 'El equipo no existe',
             ]
         );
 

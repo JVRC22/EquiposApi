@@ -13,27 +13,30 @@ class PartidosController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'local' => 'required, integer, min:1, max:100',
-                'visitante' => 'required, integer, min:1, max:100',
-                'fecha' => 'required, date',
-                'hora' => 'required, time',
+                'local' => 'required|integer|min:1|max:100|exists:equipos,id',
+                'visitante' => 'required|integer|min:1|max:100|exists:equipos,id|different:local',
+                'fecha' => 'required|date',
+                'hora' => 'required|date_format:H:i',
             ],
             [
                 'local.required' => 'El equipo local es requerido',
                 'local.integer' => 'El equipo local debe ser un número entero',
                 'local.min' => 'El equipo local debe ser un número entero mayor a 0',
                 'local.max' => 'El equipo local debe ser un número entero menor a 100',
+                'local.exists' => 'El equipo local no existe',
 
                 'visitante.required' => 'El equipo visitante es requerido',
                 'visitante.integer' => 'El equipo visitante debe ser un número entero',
                 'visitante.min' => 'El equipo visitante debe ser un número entero mayor a 0',
                 'visitante.max' => 'El equipo visitante debe ser un número entero menor a 100',
+                'visitante.exists' => 'El equipo visitante no existe',
+                'visitante.different' => 'El equipo visitante debe ser diferente al equipo local',
 
                 'fecha.required' => 'La fecha es requerida',
                 'fecha.date' => 'La fecha debe ser una fecha válida',
 
                 'hora.required' => 'La hora es requerida',
-                'hora.time' => 'La hora debe ser una hora válida',
+                'hora.date_format' => 'La hora debe tener el formato HH:MM',
             ]
         );
 
@@ -44,26 +47,28 @@ class PartidosController extends Controller
             ], 400);
         }
 
-        $partido = Partido::create([
-            'local' => $request->local,
-            'visitante' => $request->visitante,
-            'fecha' => $request->fecha,
-            'hora' => $request->hora,
-        ]);
-
-        if ($partido->save()) 
-        {
-            return response()->json([
-                'message' => 'Partido agregado correctamente',
-                'partido' => $partido
-            ], 201);
-        }
-
         else
         {
-            return response()->json([
-                'message' => 'No se pudo agregar el partido'
-            ], 500);
+            $partido = Partido::create([
+                'local' => $request->local,
+                'visitante' => $request->visitante,
+                'fecha' => $request->fecha,
+                'hora' => $request->hora,
+            ]);
+    
+            if ($partido->save()) 
+            {
+                return response()->json([
+                    'partido' => $partido
+                ], 201);
+            }
+    
+            else
+            {
+                return response()->json([
+                    'message' => 'No se pudo agregar el partido'
+                ], 500);
+            }
         }
     }
 
@@ -72,27 +77,30 @@ class PartidosController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'local' => 'required, integer, min:1, max:100',
-                'visitante' => 'required, integer, min:1, max:100',
-                'fecha' => 'required, date',
-                'hora' => 'required, time',
+                'local' => 'required|integer|min:1|max:100|exists:equipos,id',
+                'visitante' => 'required|integer|min:1|max:100|exists:equipos,id|different:local',
+                'fecha' => 'required|date',
+                'hora' => 'required|date_format:H:i',
             ],
             [
                 'local.required' => 'El equipo local es requerido',
                 'local.integer' => 'El equipo local debe ser un número entero',
                 'local.min' => 'El equipo local debe ser un número entero mayor a 0',
                 'local.max' => 'El equipo local debe ser un número entero menor a 100',
+                'local.exists' => 'El equipo local no existe',
 
                 'visitante.required' => 'El equipo visitante es requerido',
                 'visitante.integer' => 'El equipo visitante debe ser un número entero',
                 'visitante.min' => 'El equipo visitante debe ser un número entero mayor a 0',
                 'visitante.max' => 'El equipo visitante debe ser un número entero menor a 100',
+                'visitante.exists' => 'El equipo visitante no existe',
+                'visitante.different' => 'El equipo visitante debe ser diferente al equipo local',
 
                 'fecha.required' => 'La fecha es requerida',
                 'fecha.date' => 'La fecha debe ser una fecha válida',
 
                 'hora.required' => 'La hora es requerida',
-                'hora.time' => 'La hora debe ser una hora válida',
+                'hora.date_format' => 'La hora debe tener el formato HH:MM',
             ]
         );
 
@@ -115,7 +123,6 @@ class PartidosController extends Controller
             if ($partido->save())
             {
                 return response()->json([
-                    'message' => 'Partido editado correctamente',
                     'partido' => $partido
                 ], 200);
             }
@@ -172,7 +179,6 @@ class PartidosController extends Controller
         if ($partidos)
         {
             return response()->json([
-                'message' => 'Partidos encontrados',
                 'partidos' => $partidos
             ], 200);
         }
@@ -192,7 +198,6 @@ class PartidosController extends Controller
         if ($partido)
         {
             return response()->json([
-                'message' => 'Partido encontrado',
                 'partido' => $partido
             ], 200);
         }

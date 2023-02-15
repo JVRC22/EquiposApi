@@ -14,11 +14,11 @@ class PropietariosController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20',
-                'ap_paterno' => 'required, string, min:3, max:20',
-                'ap_materno' => 'required, string, min:3, max:20',
-                'sexo' => 'required, char, in: M, F',
-                'f_nac' => 'required, date'
+                'nombre' => 'required|string|min:3|max:20',
+                'ap_paterno' => 'required|string|min:3|max:20',
+                'ap_materno' => 'required|string|min:3|max:20',
+                'sexo' => 'required|string|in:M,F',
+                'f_nac' => 'required|date',
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -37,7 +37,7 @@ class PropietariosController extends Controller
                 'ap_materno.max' => 'El apellido materno debe tener como máximo 20 caracteres',
 
                 'sexo.required' => 'El sexo es requerido',
-                'sexo.char' => 'El sexo debe ser una cadena de caracteres',
+                'sexo.string' => 'El sexo debe ser una cadena de caracteres',
                 'sexo.in' => 'El sexo debe ser M o F',
 
                 'f_nac.required' => 'La fecha de nacimiento es requerida',
@@ -51,26 +51,29 @@ class PropietariosController extends Controller
             ], 400);
         }
 
-        $propietario = Propietario::create([
-            "nombre" => $request->nombre,
-            "ap_paterno" => $request->ap_paterno,
-            "ap_materno" => $request->ap_materno,
-            "sexo" => $request->sexo,
-            "f_nac" => $request->f_nac
-        ]);
-
-        if ($propietario->save()) 
+        else
         {
-            return response()->json([
-                'propietario' => $propietario
-            ], 201);
-        } 
-        
-        else 
-        {
-            return response()->json([
-                'message' => 'No se pudo crear el propietario'
-            ], 500);
+            $propietario = Propietario::create([
+                "nombre" => $request->nombre,
+                "ap_paterno" => $request->ap_paterno,
+                "ap_materno" => $request->ap_materno,
+                "sexo" => $request->sexo,
+                "f_nac" => $request->f_nac
+            ]);
+    
+            if ($propietario->save()) 
+            {
+                return response()->json([
+                    'propietario' => $propietario
+                ], 201);
+            } 
+            
+            else 
+            {
+                return response()->json([
+                    'message' => 'No se pudo crear el propietario'
+                ], 500);
+            }
         }
     }
 
@@ -79,11 +82,11 @@ class PropietariosController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required, string, min:3, max:20',
-                'ap_paterno' => 'required, string, min:3, max:20',
-                'ap_materno' => 'required, string, min:3, max:20',
-                'sexo' => 'required, char, in: M, F',
-                'f_nac' => 'required, date'
+                'nombre' => 'required|string|min:3|max:20',
+                'ap_paterno' => 'required|string|min:3|max:20',
+                'ap_materno' => 'required|string|min:3|max:20',
+                'sexo' => 'required|string|in:M,F',
+                'f_nac' => 'required|date',
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
@@ -102,7 +105,7 @@ class PropietariosController extends Controller
                 'ap_materno.max' => 'El apellido materno debe tener como máximo 20 caracteres',
 
                 'sexo.required' => 'El sexo es requerido',
-                'sexo.char' => 'El sexo debe ser una cadena de caracteres',
+                'sexo.string' => 'El sexo debe ser una cadena de caracteres',
                 'sexo.in' => 'El sexo debe ser M o F',
 
                 'f_nac.required' => 'La fecha de nacimiento es requerida',
