@@ -13,7 +13,7 @@ class EquiposController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required|string|min:3|max:20|unique:equipos,nombre',
+                'nombre' => 'required|string|min:3|max:20',
                 'division' => 'required|integer|min:1|max:3',
                 'campeonatos' => 'required|integer|min:0|max:100',
                 'estado' => 'required|integer|min:1|max:32,exists:estados,id',
@@ -24,7 +24,6 @@ class EquiposController extends Controller
                 'nombre.string' => 'El nombre debe ser una cadena de caracteres',
                 'nombre.min' => 'El nombre debe tener al menos 3 caracteres',
                 'nombre.max' => 'El nombre debe tener como máximo 20 caracteres',
-                'nombre.unique' => 'El nombre ya está en uso',
 
                 'division.required' => 'La división es requerida',
                 'division.integer' => 'La división debe ser un número entero',
@@ -69,9 +68,7 @@ class EquiposController extends Controller
     
             if ($equipo->save()) 
             {
-                return response()->json([
-                    'equipo' => $equipo
-                ], 201);
+                return $equipo;
             } 
             
             else 
@@ -88,7 +85,7 @@ class EquiposController extends Controller
         $validacion = Validator::make(
             $request->all(), 
             [
-                'nombre' => 'required|string|min:3|max:20|unique:equipos,nombre',
+                'nombre' => 'required|string|min:3|max:20',
                 'division' => 'required|integer|min:1|max:3',
                 'campeonatos' => 'required|integer|min:0|max:100',
                 'estado' => 'required|integer|min:1|max:32|exists:estados,id',
@@ -99,7 +96,6 @@ class EquiposController extends Controller
                 'nombre.string' => 'El nombre debe ser una cadena de caracteres',
                 'nombre.min' => 'El nombre debe tener al menos 3 caracteres',
                 'nombre.max' => 'El nombre debe tener como máximo 20 caracteres',
-                'nombre.unique' => 'El nombre ya está en uso',
 
                 'division.required' => 'La división es requerida',
                 'division.integer' => 'La división debe ser un número entero',
@@ -144,9 +140,7 @@ class EquiposController extends Controller
 
             if ($equipo->save()) 
             {
-                return response()->json([
-                    'equipo' => $equipo
-                ], 200);
+                return $equipo;
             } 
             
             else 
@@ -200,9 +194,7 @@ class EquiposController extends Controller
 
         if ($equipos) 
         {
-            return response()->json([
-                'equipos' => $equipos
-            ], 200);
+            return $equipos;
         } 
         
         else 
@@ -219,9 +211,7 @@ class EquiposController extends Controller
 
         if ($equipo) 
         {
-            return response()->json([
-                'equipo' => $equipo
-            ], 200);
+            return $equipo;
         } 
         
         else 

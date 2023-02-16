@@ -37,9 +37,7 @@ class EstadosController extends Controller
             ]);
     
             if ($estado->save()) {
-                return response()->json([
-                    'estado' => $estado
-                ], 201);
+                return $estado;
             } 
             
             else {
@@ -78,9 +76,7 @@ class EstadosController extends Controller
             $estado->nombre = $request->nombre;
 
             if ($estado->save()) {
-                return response()->json([
-                    'estado' => $estado
-                ], 200);
+                return $estado;
             } 
             
             else {
@@ -131,9 +127,7 @@ class EstadosController extends Controller
 
         if ($estados) 
         {
-            return response()->json([
-                'estados' => $estados
-            ], 200);
+            return $estados;
         } 
         
         else 
@@ -150,9 +144,7 @@ class EstadosController extends Controller
 
         if ($estado) 
         {
-            return response()->json([
-                'estado' => $estado
-            ], 200);
+            return $estado;
         } 
         
         else 
