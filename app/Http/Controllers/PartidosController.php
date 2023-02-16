@@ -58,9 +58,7 @@ class PartidosController extends Controller
     
             if ($partido->save()) 
             {
-                return response()->json([
-                    'partido' => $partido
-                ], 201);
+                return $partido;
             }
     
             else
@@ -122,9 +120,7 @@ class PartidosController extends Controller
 
             if ($partido->save())
             {
-                return response()->json([
-                    'partido' => $partido
-                ], 200);
+                return $partido;
             }
 
             else
@@ -178,9 +174,7 @@ class PartidosController extends Controller
 
         if ($partidos)
         {
-            return response()->json([
-                'partidos' => $partidos
-            ], 200);
+            return $partidos;
         }
 
         else
@@ -197,9 +191,7 @@ class PartidosController extends Controller
 
         if ($partido)
         {
-            return response()->json([
-                'partido' => $partido
-            ], 200);
+            return $partido;
         }
 
         else

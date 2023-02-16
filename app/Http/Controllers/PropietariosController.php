@@ -63,9 +63,7 @@ class PropietariosController extends Controller
     
             if ($propietario->save()) 
             {
-                return response()->json([
-                    'propietario' => $propietario
-                ], 201);
+                return $propietario;
             } 
             
             else 
@@ -131,9 +129,7 @@ class PropietariosController extends Controller
 
             if ($propietario->save()) 
             {
-                return response()->json([
-                    'propietario' => $propietario
-                ], 200);
+                return $propietario;
             } 
             
             else 
@@ -187,9 +183,7 @@ class PropietariosController extends Controller
 
         if ($propietarios) 
         {
-            return response()->json([
-                'propietarios' => $propietarios
-            ], 200);
+            return $propietarios;
         } 
         
         else 
@@ -206,9 +200,7 @@ class PropietariosController extends Controller
 
         if ($propietario) 
         {
-            return response()->json([
-                'propietario' => $propietario
-            ], 200);
+            return $propietario;
         } 
         
         else 

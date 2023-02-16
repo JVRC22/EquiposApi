@@ -71,9 +71,7 @@ class JugadoresController extends Controller
     
             if ($jugador->save()) 
             {
-                return response()->json([
-                    'jugador' => $jugador
-                ], 201);
+                return $jugador;
             } 
             
             else 
@@ -148,9 +146,7 @@ class JugadoresController extends Controller
 
             if ($jugador->save()) 
             {
-                return response()->json([
-                    'jugador' => $jugador
-                ], 200);
+                return $jugador;
             } 
             
             else 
@@ -204,9 +200,7 @@ class JugadoresController extends Controller
 
         if ($jugadores) 
         {
-            return response()->json([
-                'jugadores' => $jugadores
-            ], 200);
+            return $jugadores;
         } 
         
         else 
@@ -223,9 +217,7 @@ class JugadoresController extends Controller
 
         if ($jugador) 
         {
-            return response()->json([
-                'jugador' => $jugador
-            ], 200);
+            return $jugador;
         } 
         
         else 
